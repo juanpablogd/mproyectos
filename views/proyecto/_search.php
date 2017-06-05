@@ -15,11 +15,9 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
+    <?= $form->field($model, 'nombre_mun') ?>
 
-    <?= $form->field($model, 'id_tipo') ?>
-
-    <?= $form->field($model, 'codigo_mun') ?>
+    <?= $form->field($model, 'tipo_nombre') ?>
 
     <?= $form->field($model, 'cod_proy') ?>
 

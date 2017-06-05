@@ -12,6 +12,8 @@ use app\models\proyecto;
  */
 class proyectoSearch extends proyecto
 {
+    public $nombre_mun;
+    public $tipo_nombre;
     /**
      * @inheritdoc
      */
@@ -19,7 +21,7 @@ class proyectoSearch extends proyecto
     {
         return [
             [['id', 'id_tipo', 'valor'], 'integer'],
-            [['codigo_mun', 'cod_proy'], 'safe'],
+            [['codigo_mun', 'cod_proy', 'nombre_mun','tipo_nombre'], 'safe'],
         ];
     }
 
@@ -47,6 +49,7 @@ class proyectoSearch extends proyecto
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => ['attributes' => ['nombre_mun', 'tipo_nombre','cod_proy', 'valor']]
         ]);
 
         $this->load($params);
@@ -58,14 +61,14 @@ class proyectoSearch extends proyecto
         }
 
         // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'id_tipo' => $this->id_tipo,
-            'valor' => $this->valor,
-        ]);
+        $query->joinWith('codigoMun');
+        $query->joinWith('idTipo');
 
-        $query->andFilterWhere(['like', 'codigo_mun', $this->codigo_mun])
-            ->andFilterWhere(['like', 'cod_proy', $this->cod_proy]);
+        $query->andFilterWhere(['like', 'cod_proy', $this->cod_proy])
+            ->andFilterWhere(['like', 'administrativa.g_municipio_simp.nombre_mun', $this->nombre_mun])
+            ->andFilterWhere(['like', 'seguimientopdd.mp_p_tipo.tipo_nombre', $this->tipo_nombre])
+            ->andFilterWhere(['=', 'valor', $this->valor])
+            ;
 
         return $dataProvider;
     }

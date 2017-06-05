@@ -42,6 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'cod_proy',
             [
                 'label' => 'Valor',
+                'attribute'=>'valor',
                 'value' => function($model) {
                     return  yii::$app->formatter->asCurrency($model->valor);
                 },
