@@ -1,8 +1,10 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
-
+use kartik\grid\GridView;
+//use yii\grid\GridView;
+use yii\helpers\Url;
+use kartik\export\ExportMenu;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\proyectoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -18,7 +20,17 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Crear Proyecto', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-    <?= GridView::widget([
+    <?= 
+        ExportMenu::widget([
+            'dataProvider' => $dataProvider,
+            'columns' => $gridColumns,
+            'fontAwesome' => true,
+            'dropdownOptions' => [
+                'label' => 'Exportar todo',
+                'class' => 'btn btn-default'
+            ]
+        ])."\n".
+        GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
